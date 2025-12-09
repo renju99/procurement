@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>BERKELEY ONLINE VENDOR REGISTRATION FORM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, rgba(3, 120, 124, 0.1) 0%, rgba(3, 120, 124, 0.3) 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(180deg, rgba(3, 120, 124, 0.2) 0%, rgba(3, 120, 124, 0.8) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .form-section h2 {
+            color: #03787c;
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #03787c;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #d13438;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #8a8886;
+            border-radius: 2px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #03787c;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-item input[type="radio"] {
+            width: auto;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .radio-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 12px;
+            border: 1px dashed #8a8886;
+            border-radius: 2px;
+            text-align: center;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-label:hover {
+            border-color: #03787c;
+            background: #f0f0f0;
+        }
+
+        .file-name {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .reference-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .contact-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .submit-btn {
+            background: #03787c;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 2px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #014446;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #03787c;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            display: none;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .section-number {
+            font-weight: 600;
+            color: #03787c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BERKELEY ONLINE VENDOR REGISTRATION FORM</h1>
+            <p>(Pre-Qualification Questionnaire)</p>
+        </div>
+
+        <div class="form-container">
+            <div id="message" class="message"></div>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px;">Submitting your registration...</p>
+            </div>
+
+            <form id="vendorRegistrationForm" enctype="multipart/form-data">
+                <!-- Section 1: Vendor Name & Address -->
+                <div class="form-section">
+                    <h2><span class="section-number">1.</span> Vendor Name & Address</h2>
+                    <div class="form-group">
+                        <label for="companyName">Company Name <span class="required">*</span></label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telephone">Telephone # <span class="required">*</span></label>
+                            <input type="tel" id="telephone" name="telephone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="poBox">PO Box # <span class="required">*</span></label>
+                            <input type="text" id="poBox" name="poBox" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">Country <span class="required">*</span></label>
+                            <select id="country" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="UAE" selected>United Arab Emirates</option>
+                                <option value="SA">Saudi Arabia</option>
+                                <option value="KW">Kuwait</option>
+                                <option value="QA">Qatar</option>
+                                <option value="BH">Bahrain</option>
+                                <option value="OM">Oman</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="emirates">Emirates <span class="required">*</span></label>
+                            <select id="emirates" name="emirates" required>
+                                <option value="">Select Emirates</option>
+                                <option value="Abu Dhabi">Abu Dhabi</option>
+                                <option value="Dubai">Dubai</option>
+                                <option value="Sharjah">Sharjah</option>
+                                <option value="Ajman">Ajman</option>
+                                <option value="UAQ">UAQ</option>
+                                <option value="RAK">RAK</option>
+                                <option value="Fujairah">Fujairah</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="headOfficeAddress">Head Office Address <span class="required">*</span></label>
+                        <textarea id="headOfficeAddress" name="headOfficeAddress" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Serving in Emirates / Territories <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingAbuDhabi" name="servingEmirates[]" value="Abu Dhabi">
+                                <label for="servingAbuDhabi">Abu Dhabi</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingAlAin" name="servingEmirates[]" value="Al Ain">
+                                <label for="servingAlAin">Al Ain</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingDubai" name="servingEmirates[]" value="Dubai">
+                                <label for="servingDubai">Dubai</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingSharjah" name="servingEmirates[]" value="Sharjah">
+                                <label for="servingSharjah">Sharjah</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingAjman" name="servingEmirates[]" value="Ajman">
+                                <label for="servingAjman">Ajman</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingUAQ" name="servingEmirates[]" value="UAQ">
+                                <label for="servingUAQ">UAQ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingRAK" name="servingEmirates[]" value="RAK">
+                                <label for="servingRAK">RAK</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="servingFujairah" name="servingEmirates[]" value="Fujairah">
+                                <label for="servingFujairah">Fujairah</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="helpDeskEmail">Help Desk Email <span class="required">*</span></label>
+                            <input type="email" id="helpDeskEmail" name="helpDeskEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="helpDeskContact">Help Desk Contact <span class="required">*</span></label>
+                            <input type="text" id="helpDeskContact" name="helpDeskContact" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Website</label>
+                        <input type="url" id="website" name="website" placeholder="https://example.com">
+                    </div>
+                </div>
+
+                <!-- Section 2: Company Details -->
+                <div class="form-section">
+                    <h2><span class="section-number">2.</span> Company Details</h2>
+                    <div class="form-group">
+                        <label for="tradeLicenseNumber">Trade License # <span class="required">*</span></label>
+                        <input type="text" id="tradeLicenseNumber" name="tradeLicenseNumber" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tradeLicenseIssueDate">Trade License Issue Date <span class="required">*</span></label>
+                            <input type="date" id="tradeLicenseIssueDate" name="tradeLicenseIssueDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tradeLicenseValidity">T/L Validity <span class="required">*</span></label>
+                            <input type="date" id="tradeLicenseValidity" name="tradeLicenseValidity" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="issuingAuthority">Issuing Authority <span class="required">*</span></label>
+                        <input type="text" id="issuingAuthority" name="issuingAuthority" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vatCertificate">VAT Certificate <span class="required">*</span></label>
+                        <input type="text" id="vatCertificate" name="vatCertificate" required>
+                    </div>
+                </div>
+
+                <!-- Section 3: Owner / Partners -->
+                <div class="form-section">
+                    <h2><span class="section-number">3.</span> Owner / Partners</h2>
+                    <div class="form-group">
+                        <label for="ownerName">Owner Name <span class="required">*</span></label>
+                        <input type="text" id="ownerName" name="ownerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="partnerName">Partner Name</label>
+                        <input type="text" id="partnerName" name="partnerName">
+                    </div>
+                </div>
+
+                <!-- Section 4: Bank Accounts -->
+                <div class="form-section">
+                    <h2><span class="section-number">4.</span> Bank Accounts</h2>
+                    <div class="form-group">
+                        <label for="accountName">Account Name <span class="required">*</span></label>
+                        <input type="text" id="accountName" name="accountName" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bankName">Bank Name <span class="required">*</span></label>
+                            <input type="text" id="bankName" name="bankName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bankBranch">Branch</label>
+                            <input type="text" id="bankBranch" name="bankBranch">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="accountNumber">Account No <span class="required">*</span></label>
+                            <input type="text" id="accountNumber" name="accountNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ibanNumber">IBAN No <span class="required">*</span></label>
+                            <input type="text" id="ibanNumber" name="ibanNumber" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Currency <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="currencyAED" name="accountCurrency" value="AED" required>
+                                <label for="currencyAED">AED</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="currencyOther" name="accountCurrency" value="Other" required>
+                                <label for="currencyOther">Other</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: References -->
+                <div class="form-section">
+                    <h2><span class="section-number">5.</span> References (Three to Five Regular Customers)</h2>
+                    <p class="help-text">Please provide: Name of Customer / Credit Period / Contact Person / Contact Number</p>
+                    <div class="reference-row">
+                        <label for="reference01">Customer 01 <span class="required">*</span></label>
+                        <textarea id="reference01" name="reference01" required placeholder="Name of Customer / Credit Period / Contact Person / Contact Number"></textarea>
+                    </div>
+                    <div class="reference-row">
+                        <label for="reference02">Customer 02 <span class="required">*</span></label>
+                        <textarea id="reference02" name="reference02" required placeholder="Name of Customer / Credit Period / Contact Person / Contact Number"></textarea>
+                    </div>
+                    <div class="reference-row">
+                        <label for="reference03">Customer 03 <span class="required">*</span></label>
+                        <textarea id="reference03" name="reference03" required placeholder="Name of Customer / Credit Period / Contact Person / Contact Number"></textarea>
+                    </div>
+                    <div class="reference-row">
+                        <label for="reference04">Customer 04</label>
+                        <textarea id="reference04" name="reference04" placeholder="Name of Customer / Credit Period / Contact Person / Contact Number"></textarea>
+                    </div>
+                    <div class="reference-row">
+                        <label for="reference05">Customer 05</label>
+                        <textarea id="reference05" name="reference05" placeholder="Name of Customer / Credit Period / Contact Person / Contact Number"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 6: Key Contacts -->
+                <div class="form-section">
+                    <h2><span class="section-number">6.</span> Key Contacts</h2>
+                    <div class="contact-row">
+                        <div class="form-group">
+                            <label>Role/Designation</label>
+                            <input type="text" value="MD/CEO/GM" readonly style="background: #f5f5f5;">
+                        </div>
+                        <div class="form-group">
+                            <label>Name <span class="required">*</span></label>
+                            <input type="text" name="contact01Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="email" name="contact01Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number <span class="required">*</span></label>
+                            <input type="tel" name="contact01Phone" required>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="form-group">
+                            <label>Role/Designation</label>
+                            <input type="text" value="Finance Head/Manager" readonly style="background: #f5f5f5;">
+                        </div>
+                        <div class="form-group">
+                            <label>Name <span class="required">*</span></label>
+                            <input type="text" name="contact02Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email <span class="required">*</span></label>
+                            <input type="email" name="contact02Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number <span class="required">*</span></label>
+                            <input type="tel" name="contact02Phone" required>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="form-group">
+                            <label>Role/Designation</label>
+                            <input type="text" value="Operations Head/Manager" readonly style="background: #f5f5f5;">
+                        </div>
+                        <div class="form-group">
+                            <label>Name <span class="required">*</span></label>
+                            <input type="text" name="contact03Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="contact03Email">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="tel" name="contact03Phone">
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="form-group">
+                            <label>Role/Designation</label>
+                            <input type="text" value="Sales Head/Manager" readonly style="background: #f5f5f5;">
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="contact04Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="contact04Email">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="tel" name="contact04Phone">
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="form-group">
+                            <label>Role/Designation</label>
+                            <input type="text" value="Sales Engineer/Executive" readonly style="background: #f5f5f5;">
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="contact05Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="contact05Email">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="tel" name="contact05Phone">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 7: Required Documents -->
+                <div class="form-section">
+                    <h2><span class="section-number">7.</span> List of Required Documents</h2>
+                    <p class="help-text">Please send the following documents via email (tick as attached):</p>
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="docTradeLicense" name="docTradeLicense" required>
+                            <label for="docTradeLicense">Valid Trade License <span class="required">*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tradeLicenseFile">Upload Trade License</label>
+                        <div class="file-upload">
+                            <input type="file" id="tradeLicenseFile" name="tradeLicense" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <label for="tradeLicenseFile" class="file-upload-label">
+                                <span>Choose File</span>
+                            </label>
+                            <div class="file-name" id="tradeLicenseFile-name"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="docOwnerPassport" name="docOwnerPassport" required>
+                            <label for="docOwnerPassport">Owner/Partners Passport Copies <span class="required">*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ownerPassportFile">Upload Owner/Partners Passport Copies</label>
+                        <div class="file-upload">
+                            <input type="file" id="ownerPassportFile" name="ownerPassport" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <label for="ownerPassportFile" class="file-upload-label">
+                                <span>Choose File</span>
+                            </label>
+                            <div class="file-name" id="ownerPassportFile-name"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="docBankStatement" name="docBankStatement" required>
+                            <label for="docBankStatement">Last 6 months Bank Statement <span class="required">*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bankStatementFile">Upload Bank Statement</label>
+                        <div class="file-upload">
+                            <input type="file" id="bankStatementFile" name="bankStatement" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <label for="bankStatementFile" class="file-upload-label">
+                                <span>Choose File</span>
+                            </label>
+                            <div class="file-name" id="bankStatementFile-name"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="docVatCertificate" name="docVatCertificate" required>
+                            <label for="docVatCertificate">VAT Certificate <span class="required">*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vatCertificateFile">Upload VAT Certificate</label>
+                        <div class="file-upload">
+                            <input type="file" id="vatCertificateFile" name="vatCertificate" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <label for="vatCertificateFile" class="file-upload-label">
+                                <span>Choose File</span>
+                            </label>
+                            <div class="file-name" id="vatCertificateFile-name"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="docCompanyProfile" name="docCompanyProfile">
+                            <label for="docCompanyProfile">Company Profile</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyProfileFile">Upload Company Profile</label>
+                        <div class="file-upload">
+                            <input type="file" id="companyProfileFile" name="companyProfile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <label for="companyProfileFile" class="file-upload-label">
+                                <span>Choose File</span>
+                            </label>
+                            <div class="file-name" id="companyProfileFile-name"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="docFinancialStatement" name="docFinancialStatement">
+                            <label for="docFinancialStatement">Recent Audited Financial Statement</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="financialStatementFile">Upload Financial Statement</label>
+                        <div class="file-upload">
+                            <input type="file" id="financialStatementFile" name="financialStatement" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <label for="financialStatementFile" class="file-upload-label">
+                                <span>Choose File</span>
+                            </label>
+                            <div class="file-name" id="financialStatementFile-name"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 8: Insurances -->
+                <div class="form-section">
+                    <h2><span class="section-number">8.</span> Insurances</h2>
+                    <div class="form-group">
+                        <label>Public Liability</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="publicLiabilityYes" name="publicLiability" value="Yes">
+                                <label for="publicLiabilityYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="publicLiabilityNo" name="publicLiability" value="No">
+                                <label for="publicLiabilityNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Employer Liability</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="employerLiabilityYes" name="employerLiability" value="Yes">
+                                <label for="employerLiabilityYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="employerLiabilityNo" name="employerLiability" value="No">
+                                <label for="employerLiabilityNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Workman's Compensation <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="workmanCompYes" name="workmanCompensation" value="Yes" required>
+                                <label for="workmanCompYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="workmanCompNo" name="workmanCompensation" value="No" required>
+                                <label for="workmanCompNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Contractors All Risk Insurance <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="contractorsRiskYes" name="contractorsRiskInsurance" value="Yes" required>
+                                <label for="contractorsRiskYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="contractorsRiskNo" name="contractorsRiskInsurance" value="No" required>
+                                <label for="contractorsRiskNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 9: ESG & QHSE Requirements -->
+                <div class="form-section">
+                    <h2><span class="section-number">9.</span> ESG & QHSE Requirements</h2>
+                    <p class="help-text">For each, tick Yes or No and attach supporting documents as required.</p>
+                    
+                    <div class="form-group">
+                        <label>IMS Certification (ISO 9001, 14001, 45001) <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="imsCertYes" name="imsCertification" value="Yes" required>
+                                <label for="imsCertYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="imsCertNo" name="imsCertification" value="No" required>
+                                <label for="imsCertNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>EcoVadis Assessment <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="ecovadisYes" name="ecovadisAssessment" value="Yes" required>
+                                <label for="ecovadisYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="ecovadisNo" name="ecovadisAssessment" value="No" required>
+                                <label for="ecovadisNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hazard Identification & Safe Working Procedure <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="hazardIdYes" name="hazardIdentification" value="Yes" required>
+                                <label for="hazardIdYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="hazardIdNo" name="hazardIdentification" value="No" required>
+                                <label for="hazardIdNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Written Quality Policy <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="qualityPolicyYes" name="qualityPolicy" value="Yes" required>
+                                <label for="qualityPolicyYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="qualityPolicyNo" name="qualityPolicy" value="No" required>
+                                <label for="qualityPolicyNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Written Health & Safety Policy <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="healthSafetyPolicyYes" name="healthSafetyPolicy" value="Yes" required>
+                                <label for="healthSafetyPolicyYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="healthSafetyPolicyNo" name="healthSafetyPolicy" value="No" required>
+                                <label for="healthSafetyPolicyNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Written Environment Policy <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="environmentPolicyYes" name="environmentPolicy" value="Yes" required>
+                                <label for="environmentPolicyYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="environmentPolicyNo" name="environmentPolicy" value="No" required>
+                                <label for="environmentPolicyNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Written Energy Policy <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="energyPolicyYes" name="energyPolicy" value="Yes" required>
+                                <label for="energyPolicyYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="energyPolicyNo" name="energyPolicy" value="No" required>
+                                <label for="energyPolicyNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Operational Standards for Labor (e.g., SA8000) <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="laborStandardsYes" name="laborStandards" value="Yes" required>
+                                <label for="laborStandardsYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="laborStandardsNo" name="laborStandards" value="No" required>
+                                <label for="laborStandardsNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Commitment to labor/environment/anti-corruption disclosure <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="commitmentYes" name="commitmentDisclosure" value="Yes" required>
+                                <label for="commitmentYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="commitmentNo" name="commitmentDisclosure" value="No" required>
+                                <label for="commitmentNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Supplier Code of Conduct <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="supplierCodeYes" name="supplierCode" value="Yes" required>
+                                <label for="supplierCodeYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="supplierCodeNo" name="supplierCode" value="No" required>
+                                <label for="supplierCodeNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Training & Development Policy <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="trainingPolicyYes" name="trainingPolicy" value="Yes" required>
+                                <label for="trainingPolicyYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="trainingPolicyNo" name="trainingPolicy" value="No" required>
+                                <label for="trainingPolicyNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Health & Safety Risk Assessment last year <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="riskAssessmentYes" name="riskAssessment" value="Yes" required>
+                                <label for="riskAssessmentYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="riskAssessmentNo" name="riskAssessment" value="No" required>
+                                <label for="riskAssessmentNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Employees' Rights Awareness (tick all that apply) <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rightsNoticeBoards" name="employeesRights[]" value="Notice Boards">
+                                <label for="rightsNoticeBoards">Notice Boards</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rightsIntranet" name="employeesRights[]" value="Intranet">
+                                <label for="rightsIntranet">Intranet</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rightsWrittenContracts" name="employeesRights[]" value="Written Contracts">
+                                <label for="rightsWrittenContracts">Written Contracts</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rightsOther" name="employeesRights[]" value="Other">
+                                <label for="rightsOther">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Is overtime voluntary? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="overtimeYes" name="overtimeVoluntary" value="Yes" required>
+                                <label for="overtimeYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="overtimeNo" name="overtimeVoluntary" value="No" required>
+                                <label for="overtimeNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="weeklyWorkingHours">Normal weekly working hours <span class="required">*</span></label>
+                            <input type="number" id="weeklyWorkingHours" name="weeklyWorkingHours" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="youngestEmploymentAge">Youngest employment age <span class="required">*</span></label>
+                            <input type="number" id="youngestEmploymentAge" name="youngestEmploymentAge" min="0" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 10: Payment Terms -->
+                <div class="form-section">
+                    <h2><span class="section-number">10.</span> Payment Terms</h2>
+                    <div class="form-group">
+                        <label>Preferred Credit Period <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="credit120" name="creditPeriod" value="120 Days" required>
+                                <label for="credit120">120 Days</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="credit90" name="creditPeriod" value="90 Days" required>
+                                <label for="credit90">90 Days</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="creditOther" name="creditPeriod" value="Other" required>
+                                <label for="creditOther">Other:</label>
+                            </div>
+                        </div>
+                        <input type="text" id="creditOtherText" name="creditOtherText" placeholder="Specify other credit period" style="margin-top: 10px; display: none;">
+                    </div>
+                </div>
+
+                <!-- Section 11: Nature of Business -->
+                <div class="form-section">
+                    <h2><span class="section-number">11.</span> Nature of Business / Engagement with Berkeley</h2>
+                    <p class="help-text">Select all that apply:</p>
+                    
+                    <div class="form-group">
+                        <label style="font-size: 16px; margin-bottom: 15px;">Materials Supply <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matHVAC" name="materialsSupply[]" value="HVAC Items">
+                                <label for="matHVAC">HVAC Items</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matElectrical" name="materialsSupply[]" value="Electrical Items">
+                                <label for="matElectrical">Electrical Items</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matMechanical" name="materialsSupply[]" value="Mechanical Items">
+                                <label for="matMechanical">Mechanical Items</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matPlumbing" name="materialsSupply[]" value="Plumbing Items">
+                                <label for="matPlumbing">Plumbing Items</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matCivil" name="materialsSupply[]" value="Civil Items">
+                                <label for="matCivil">Civil Items</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matPPE" name="materialsSupply[]" value="PPE (HSE) Items">
+                                <label for="matPPE">PPE (HSE) Items</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matTools" name="materialsSupply[]" value="Hard Tools & Equipment">
+                                <label for="matTools">Hard Tools & Equipment</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matUniform" name="materialsSupply[]" value="Uniform & Shoes">
+                                <label for="matUniform">Uniform & Shoes</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matCleaningChem" name="materialsSupply[]" value="Cleaning Chemicals">
+                                <label for="matCleaningChem">Cleaning Chemicals</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matCleaningPaper" name="materialsSupply[]" value="Cleaning Paper Products">
+                                <label for="matCleaningPaper">Cleaning Paper Products</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matCleaningConsumables" name="materialsSupply[]" value="Cleaning Consumables & Janitorial">
+                                <label for="matCleaningConsumables">Cleaning Consumables & Janitorial</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matCleaningTools" name="materialsSupply[]" value="Cleaning Tools & Machines">
+                                <label for="matCleaningTools">Cleaning Tools & Machines</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matCampBedding" name="materialsSupply[]" value="Camp's Bedding & Furniture">
+                                <label for="matCampBedding">Camp's Bedding & Furniture</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matOfficeSupplies" name="materialsSupply[]" value="Office Supplies">
+                                <label for="matOfficeSupplies">Office Supplies</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matVehicleRental" name="materialsSupply[]" value="Vehicles / Equipment Rental">
+                                <label for="matVehicleRental">Vehicles / Equipment Rental</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matDiesel" name="materialsSupply[]" value="DIESEL Supply">
+                                <label for="matDiesel">DIESEL Supply</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matLaundryChem" name="materialsSupply[]" value="Laundry Chemicals">
+                                <label for="matLaundryChem">Laundry Chemicals</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matLaundryAccessories" name="materialsSupply[]" value="Laundry Accessories">
+                                <label for="matLaundryAccessories">Laundry Accessories</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matLandscaping" name="materialsSupply[]" value="Landscaping Materials">
+                                <label for="matLandscaping">Landscaping Materials</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="matCatering" name="materialsSupply[]" value="Catering Materials">
+                                <label for="matCatering">Catering Materials</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-size: 16px; margin-bottom: 15px;">One-Off / AMC Services (MEP, Civil, Mechanical, FLS, ELV, Other Specialized Services) <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcACChiller" name="amcServices[]" value="AC / Chiller replacement">
+                                <label for="svcACChiller">AC / Chiller replacement</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcDucting" name="amcServices[]" value="Ducting Works">
+                                <label for="svcDucting">Ducting Works</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcChilledWater" name="amcServices[]" value="Chilled Water Pipe Insulation">
+                                <label for="svcChilledWater">Chilled Water Pipe Insulation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcElectricalDB" name="amcServices[]" value="Electrical DB replacement, Modification">
+                                <label for="svcElectricalDB">Electrical DB replacement, Modification</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcCabling" name="amcServices[]" value="Cabling">
+                                <label for="svcCabling">Cabling</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcPiping" name="amcServices[]" value="Piping (Water supply, Drainage, CHW)">
+                                <label for="svcPiping">Piping (Water supply, Drainage, CHW)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcWaterproofing" name="amcServices[]" value="Water proofing">
+                                <label for="svcWaterproofing">Water proofing</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcPainting" name="amcServices[]" value="Painting Works">
+                                <label for="svcPainting">Painting Works</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcCarpentry" name="amcServices[]" value="Carpentry Works">
+                                <label for="svcCarpentry">Carpentry Works</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcBlockPlaster" name="amcServices[]" value="Block, Plastering, Tiling">
+                                <label for="svcBlockPlaster">Block, Plastering, Tiling</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcInterlock" name="amcServices[]" value="Interlock Works">
+                                <label for="svcInterlock">Interlock Works</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcExcavation" name="amcServices[]" value="Soil Excavation and Reinstatement">
+                                <label for="svcExcavation">Soil Excavation and Reinstatement</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcGlassAluminum" name="amcServices[]" value="Glass & Aluminum Works">
+                                <label for="svcGlassAluminum">Glass & Aluminum Works</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcBMU" name="amcServices[]" value="BMU Maintenance">
+                                <label for="svcBMU">BMU Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcGym" name="amcServices[]" value="Gym Equipment Maintenance">
+                                <label for="svcGym">Gym Equipment Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcGarbageChute" name="amcServices[]" value="Garbage Chute Maintenance">
+                                <label for="svcGarbageChute">Garbage Chute Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcAccessEquipment" name="amcServices[]" value="Access Equipment Maintenance">
+                                <label for="svcAccessEquipment">Access Equipment Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcGenerator" name="amcServices[]" value="Generator Maintenance">
+                                <label for="svcGenerator">Generator Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcShutterDoor" name="amcServices[]" value="Manual Shutter Door Maintenance">
+                                <label for="svcShutterDoor">Manual Shutter Door Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcLifts" name="amcServices[]" value="Lifts Maintenance">
+                                <label for="svcLifts">Lifts Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcMotorsPumps" name="amcServices[]" value="Motors & Pumps Repairing">
+                                <label for="svcMotorsPumps">Motors & Pumps Repairing</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcChillers" name="amcServices[]" value="Chillers Maintenance">
+                                <label for="svcChillers">Chillers Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcFireAlarm" name="amcServices[]" value="Fire Alarm">
+                                <label for="svcFireAlarm">Fire Alarm</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcFireFighting" name="amcServices[]" value="Fire Fighting (Pumps, Cyl, Hose Reel)">
+                                <label for="svcFireFighting">Fire Fighting (Pumps, Cyl, Hose Reel)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcCBExitLights" name="amcServices[]" value="CB/Emergency/Exit Lights">
+                                <label for="svcCBExitLights">CB/Emergency/Exit Lights</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcPAVA" name="amcServices[]" value="PAVA">
+                                <label for="svcPAVA">PAVA</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcKitchenHood" name="amcServices[]" value="Kitchen hood Fire Suppression Sys">
+                                <label for="svcKitchenHood">Kitchen hood Fire Suppression Sys</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcFM200" name="amcServices[]" value="FM 200 Fire Suppression Sys">
+                                <label for="svcFM200">FM 200 Fire Suppression Sys</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcFoamSystem" name="amcServices[]" value="Foam System">
+                                <label for="svcFoamSystem">Foam System</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcFireHydrants" name="amcServices[]" value="Fire Hydrants">
+                                <label for="svcFireHydrants">Fire Hydrants</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcBMS" name="amcServices[]" value="BMS">
+                                <label for="svcBMS">BMS</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcAutoSlidingDoors" name="amcServices[]" value="Automatic Sliding Doors">
+                                <label for="svcAutoSlidingDoors">Automatic Sliding Doors</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcAutoRevolvingDoors" name="amcServices[]" value="Automatic Revolving Doors">
+                                <label for="svcAutoRevolvingDoors">Automatic Revolving Doors</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcAutoSwingDoors" name="amcServices[]" value="Automatic Swing Doors">
+                                <label for="svcAutoSwingDoors">Automatic Swing Doors</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcAutoShutterDoors" name="amcServices[]" value="Automatic Shutter Doors">
+                                <label for="svcAutoShutterDoors">Automatic Shutter Doors</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcTurnstile" name="amcServices[]" value="Turnstile Gate System">
+                                <label for="svcTurnstile">Turnstile Gate System</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcAccessControl" name="amcServices[]" value="Access Control System">
+                                <label for="svcAccessControl">Access Control System</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcLightingControl" name="amcServices[]" value="Lighting Control System">
+                                <label for="svcLightingControl">Lighting Control System</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcCCTV" name="amcServices[]" value="CCTV Maintenance">
+                                <label for="svcCCTV">CCTV Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcANPR" name="amcServices[]" value="ANPR Maintenance">
+                                <label for="svcANPR">ANPR Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcGateBarrier" name="amcServices[]" value="Gate Barrier Maintenance">
+                                <label for="svcGateBarrier">Gate Barrier Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcUPS" name="amcServices[]" value="UPS Maintenance">
+                                <label for="svcUPS">UPS Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcSignage" name="amcServices[]" value="Signage Maintenance">
+                                <label for="svcSignage">Signage Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcLEDScreens" name="amcServices[]" value="LED Screens Maintenance">
+                                <label for="svcLEDScreens">LED Screens Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcFootfall" name="amcServices[]" value="Footfall Counting System">
+                                <label for="svcFootfall">Footfall Counting System</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcParking" name="amcServices[]" value="Parking Management System">
+                                <label for="svcParking">Parking Management System</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcInternet" name="amcServices[]" value="Internet, WiFi / Music System">
+                                <label for="svcInternet">Internet, WiFi / Music System</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcSauna" name="amcServices[]" value="Sauna / Steam Maintenance">
+                                <label for="svcSauna">Sauna / Steam Maintenance</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcACDuctCleaning" name="amcServices[]" value="AC Ducting Cleaning">
+                                <label for="svcACDuctCleaning">AC Ducting Cleaning</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcKitchenHoodCleaning" name="amcServices[]" value="Kitchen hood Cleaning">
+                                <label for="svcKitchenHoodCleaning">Kitchen hood Cleaning</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcChilledWaterInsulation" name="amcServices[]" value="Chilled Water Pipe Insulation">
+                                <label for="svcChilledWaterInsulation">Chilled Water Pipe Insulation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcWaterPipeline" name="amcServices[]" value="Domestic Water Pipeline Flushing">
+                                <label for="svcWaterPipeline">Domestic Water Pipeline Flushing</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcDrainageJetting" name="amcServices[]" value="Drainage Network Jetting / Flushing">
+                                <label for="svcDrainageJetting">Drainage Network Jetting / Flushing</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcGreaseTrap" name="amcServices[]" value="Grease Trap Cleaning">
+                                <label for="svcGreaseTrap">Grease Trap Cleaning</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcSewageWater" name="amcServices[]" value="Sewage Water Removal">
+                                <label for="svcSewageWater">Sewage Water Removal</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcStormWater" name="amcServices[]" value="Storm Water Removal">
+                                <label for="svcStormWater">Storm Water Removal</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcPoolCleaning" name="amcServices[]" value="Swimming Pool Cleaning">
+                                <label for="svcPoolCleaning">Swimming Pool Cleaning</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcWaterFeature" name="amcServices[]" value="Water Feature / Fountains">
+                                <label for="svcWaterFeature">Water Feature / Fountains</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcWaterTesting" name="amcServices[]" value="Water Testing and Sampling">
+                                <label for="svcWaterTesting">Water Testing and Sampling</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcWaterTank" name="amcServices[]" value="Water Tank Cleaning">
+                                <label for="svcWaterTank">Water Tank Cleaning</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcSumpit" name="amcServices[]" value="Sumpit Cleaning">
+                                <label for="svcSumpit">Sumpit Cleaning</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcPestControl" name="amcServices[]" value="Pest Control">
+                                <label for="svcPestControl">Pest Control</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcWasteManagement" name="amcServices[]" value="General Waste Collection / Management">
+                                <label for="svcWasteManagement">General Waste Collection / Management</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcFacadeCleaning" name="amcServices[]" value="External Façade / Glass Cleaning">
+                                <label for="svcFacadeCleaning">External Façade / Glass Cleaning</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="svcTSE" name="amcServices[]" value="TSE Water Supply">
+                                <label for="svcTSE">TSE Water Supply</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="font-size: 16px; margin-bottom: 15px;">Short Term Skilled Manpower Supply <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerMaleSecurity" name="manpowerSupply[]" value="Male Security Guard">
+                                <label for="manpowerMaleSecurity">Male Security Guard</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerFemaleSecurity" name="manpowerSupply[]" value="Female Security Guard">
+                                <label for="manpowerFemaleSecurity">Female Security Guard</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerSecuritySupervisor" name="manpowerSupply[]" value="Security Supervisor">
+                                <label for="manpowerSecuritySupervisor">Security Supervisor</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerLifeguard" name="manpowerSupply[]" value="Life Guard">
+                                <label for="manpowerLifeguard">Life Guard</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerHVAC" name="manpowerSupply[]" value="HVAC Technician">
+                                <label for="manpowerHVAC">HVAC Technician</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerElectrician" name="manpowerSupply[]" value="Electrician">
+                                <label for="manpowerElectrician">Electrician</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerPlumber" name="manpowerSupply[]" value="Plumber">
+                                <label for="manpowerPlumber">Plumber</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerMason" name="manpowerSupply[]" value="Civil Mason">
+                                <label for="manpowerMason">Civil Mason</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerCarpenter" name="manpowerSupply[]" value="Carpenter">
+                                <label for="manpowerCarpenter">Carpenter</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerGardener" name="manpowerSupply[]" value="Gardener">
+                                <label for="manpowerGardener">Gardener</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="manpowerHelper" name="manpowerSupply[]" value="General Helper">
+                                <label for="manpowerHelper">General Helper</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="otherServices">Other Misc. Supplies / Services (Please specify):</label>
+                        <textarea id="otherServices" name="otherServices" placeholder="Specify other services or supplies"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 12: Disclaimer and Declaration -->
+                <div class="form-section">
+                    <h2><span class="section-number">12.</span> Disclaimer and Declaration</h2>
+                    <div class="form-group">
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 2px; border-left: 4px solid #03787c; margin-bottom: 20px;">
+                            <p style="margin-bottom: 15px; line-height: 1.8;">
+                                By submitting this application, I confirm:<br><br>
+                                • I am authorized to complete and submit this form on behalf of my company.<br>
+                                • All information provided is true, accurate, and complete.<br>
+                                • Providing false or misleading information may result in disqualification.<br>
+                                • I agree to comply with the terms and conditions set by Berkeley Services UAE LLC.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="authorizedPersonName">Authorized Person Name <span class="required">*</span></label>
+                            <input type="text" id="authorizedPersonName" name="authorizedPersonName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="authorizedPersonContact">Contact Number <span class="required">*</span></label>
+                            <input type="tel" id="authorizedPersonContact" name="authorizedPersonContact" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="authorizedPersonEmail">Authorized Person's Direct Email ID <span class="required">*</span></label>
+                        <input type="email" id="authorizedPersonEmail" name="authorizedPersonEmail" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Submit Registration
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // File upload handlers
+        const fileInputs = [
+            'tradeLicenseFile', 'ownerPassportFile', 'bankStatementFile', 
+            'vatCertificateFile', 'companyProfileFile', 'financialStatementFile'
+        ];
+        
+        fileInputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input) {
+                const nameDisplay = document.getElementById(inputId + '-name');
+                
+                input.addEventListener('change', function(e) {
+                    if (e.target.files.length > 0) {
+                        const file = e.target.files[0];
+                        const fileSize = (file.size / 1024 / 1024).toFixed(2); // MB
+                        
+                        if (file.size > 10 * 1024 * 1024) {
+                            alert(`File size exceeds 10MB limit. Please choose a smaller file.`);
+                            e.target.value = '';
+                            if (nameDisplay) nameDisplay.textContent = '';
+                            return;
+                        }
+                        
+                        if (nameDisplay) {
+                            nameDisplay.textContent = `Selected: ${file.name} (${fileSize} MB)`;
+                            nameDisplay.style.color = '#28a745';
+                        }
+                    } else {
+                        if (nameDisplay) nameDisplay.textContent = '';
+                    }
+                });
+            }
+        });
+
+        // Credit period other text field toggle
+        document.getElementById('creditOther').addEventListener('change', function() {
+            const otherText = document.getElementById('creditOtherText');
+            if (this.checked) {
+                otherText.style.display = 'block';
+                otherText.required = true;
+            } else {
+                otherText.style.display = 'none';
+                otherText.required = false;
+            }
+        });
+
+        // Form submission
+        document.getElementById('vendorRegistrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const message = document.getElementById('message');
+            
+            // Hide previous messages
+            message.style.display = 'none';
+            
+            // Validate required fields
+            const requiredFields = [
+                'companyName', 'telephone', 'poBox', 'country', 'emirates', 
+                'headOfficeAddress', 'helpDeskEmail', 'helpDeskContact',
+                'tradeLicenseNumber', 'tradeLicenseIssueDate', 'tradeLicenseValidity',
+                'issuingAuthority', 'vatCertificate', 'ownerName',
+                'accountName', 'bankName', 'accountNumber', 'ibanNumber',
+                'reference01', 'reference02', 'reference03',
+                'contact01Name', 'contact01Email', 'contact01Phone',
+                'contact02Name', 'contact02Email', 'contact02Phone',
+                'authorizedPersonName', 'authorizedPersonContact', 'authorizedPersonEmail'
+            ];
+            
+            let isValid = true;
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field && !field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#d13438';
+                } else if (field) {
+                    field.style.borderColor = '#8a8886';
+                }
+            });
+            
+            // Validate radio buttons
+            const requiredRadios = [
+                'accountCurrency', 'workmanCompensation', 'contractorsRiskInsurance',
+                'imsCertification', 'ecovadisAssessment', 'hazardIdentification',
+                'qualityPolicy', 'healthSafetyPolicy', 'environmentPolicy',
+                'energyPolicy', 'laborStandards', 'commitmentDisclosure',
+                'supplierCode', 'trainingPolicy', 'riskAssessment',
+                'overtimeVoluntary', 'creditPeriod'
+            ];
+            
+            requiredRadios.forEach(radioName => {
+                const radios = document.querySelectorAll(`input[name="${radioName}"]:checked`);
+                if (radios.length === 0) {
+                    isValid = false;
+                }
+            });
+            
+            // Validate checkboxes
+            const servingEmirates = document.querySelectorAll('input[name="servingEmirates[]"]:checked');
+            if (servingEmirates.length === 0) {
+                isValid = false;
+                showMessage('Please select at least one serving Emirates/Territory.', 'error');
+                return;
+            }
+            
+            if (!isValid) {
+                showMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            // Disable submit button and show loading
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            
+            try {
+                // Create FormData object
+                const formData = new FormData(this);
+                
+                // Get your n8n webhook URL
+                // Your domain: n8n.proptechme.com
+                const webhookUrl = 'https://n8n.proptechme.com/webhook/vendor-registration';
+                
+                // Submit form data
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    showMessage('Registration submitted successfully! You will receive a confirmation email shortly.', 'success');
+                    this.reset();
+                    
+                    // Clear file names
+                    fileInputs.forEach(inputId => {
+                        const nameDisplay = document.getElementById(inputId + '-name');
+                        if (nameDisplay) nameDisplay.textContent = '';
+                    });
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error(result.error || 'Registration failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage(error.message || 'An error occurred. Please try again later.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            }
+        });
+        
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            
+            // Scroll to message
+            message.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
