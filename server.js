@@ -711,6 +711,11 @@ app.get('/uploads', (req, res) => {
     res.sendFile(path.join(__dirname, 'uploads-browser.html'));
 });
 
+// Handle /uploads/ with trailing slash
+app.get('/uploads/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'uploads-browser.html'));
+});
+
 // API endpoint to list directories and files
 app.get('/api/uploads/list', (req, res) => {
     try {
