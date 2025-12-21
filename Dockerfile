@@ -14,6 +14,7 @@ RUN npm install --omit=dev
 COPY server.js ./
 COPY config.example.js ./
 COPY vendor-registration-form.html ./
+COPY uploads-browser.html ./
 
 # Create uploads directory
 RUN mkdir -p uploads

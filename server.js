@@ -706,6 +706,145 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'vendor-registration-form.html'));
 });
 
+// Serve uploads browser interface
+app.get('/uploads', (req, res) => {
+    res.sendFile(path.join(__dirname, 'uploads-browser.html'));
+});
+
+// API endpoint to list directories and files
+app.get('/api/uploads/list', (req, res) => {
+    try {
+        const requestedPath = req.query.path || '';
+        const fullPath = requestedPath 
+            ? path.join(uploadsDir, requestedPath)
+            : uploadsDir;
+
+        // Security: Ensure path is within uploads directory
+        const normalizedPath = path.normalize(fullPath);
+        const normalizedUploadsDir = path.normalize(uploadsDir);
+        
+        if (!normalizedPath.startsWith(normalizedUploadsDir)) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        if (!fs.existsSync(normalizedPath)) {
+            return res.status(404).json({ error: 'Directory not found' });
+        }
+
+        const stats = fs.statSync(normalizedPath);
+        if (!stats.isDirectory()) {
+            return res.status(400).json({ error: 'Path is not a directory' });
+        }
+
+        const items = [];
+        const entries = fs.readdirSync(normalizedPath, { withFileTypes: true });
+
+        entries.forEach(entry => {
+            const entryPath = path.join(normalizedPath, entry.name);
+            const entryStats = fs.statSync(entryPath);
+            
+            if (entry.isDirectory()) {
+                // Count files in directory
+                let fileCount = 0;
+                try {
+                    const dirContents = fs.readdirSync(entryPath);
+                    fileCount = dirContents.filter(item => {
+                        const itemPath = path.join(entryPath, item);
+                        return fs.statSync(itemPath).isFile();
+                    }).length;
+                } catch (err) {
+                    // Ignore errors counting files
+                }
+
+                items.push({
+                    name: entry.name,
+                    type: 'folder',
+                    modified: entryStats.mtime.toISOString(),
+                    fileCount: fileCount
+                });
+            } else if (entry.isFile()) {
+                items.push({
+                    name: entry.name,
+                    type: 'file',
+                    size: entryStats.size,
+                    modified: entryStats.mtime.toISOString()
+                });
+            }
+        });
+
+        // Sort: folders first, then files, both alphabetically
+        items.sort((a, b) => {
+            if (a.type !== b.type) {
+                return a.type === 'folder' ? -1 : 1;
+            }
+            return a.name.localeCompare(b.name);
+        });
+
+        // Calculate statistics
+        const statsData = {
+            total: items.length,
+            folders: items.filter(item => item.type === 'folder').length,
+            files: items.filter(item => item.type === 'file').length
+        };
+
+        res.json({ items, stats: statsData });
+    } catch (error) {
+        console.error('Error listing directory:', error);
+        res.status(500).json({ error: 'Failed to list directory: ' + error.message });
+    }
+});
+
+// API endpoint to download files
+app.get('/api/uploads/download', (req, res) => {
+    try {
+        const requestedPath = req.query.path;
+        if (!requestedPath) {
+            return res.status(400).json({ error: 'Path parameter is required' });
+        }
+
+        const fullPath = path.join(uploadsDir, requestedPath);
+
+        // Security: Ensure path is within uploads directory
+        const normalizedPath = path.normalize(fullPath);
+        const normalizedUploadsDir = path.normalize(uploadsDir);
+        
+        if (!normalizedPath.startsWith(normalizedUploadsDir)) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        if (!fs.existsSync(normalizedPath)) {
+            return res.status(404).json({ error: 'File not found' });
+        }
+
+        const stats = fs.statSync(normalizedPath);
+        if (!stats.isFile()) {
+            return res.status(400).json({ error: 'Path is not a file' });
+        }
+
+        // Set appropriate headers
+        const filename = path.basename(normalizedPath);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.setHeader('Content-Type', 'application/octet-stream');
+        res.setHeader('Content-Length', stats.size);
+
+        // Stream the file
+        const fileStream = fs.createReadStream(normalizedPath);
+        fileStream.pipe(res);
+
+        fileStream.on('error', (error) => {
+            console.error('Error streaming file:', error);
+            if (!res.headersSent) {
+                res.status(500).json({ error: 'Error reading file' });
+            }
+        });
+    } catch (error) {
+        console.error('Error downloading file:', error);
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Failed to download file: ' + error.message });
+        }
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
