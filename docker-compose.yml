@@ -16,8 +16,8 @@ services:
       # - VIRTUAL_HOST=supplier.proptechme.com
       # - VIRTUAL_PORT=3000
     volumes:
-      # Map D:\Vendors to container's vendors directory
-      - D:\Vendors:/app/vendors
+      # Persist uploads/vendors directory (mounted from host /var/www/attachments)
+      - /var/www/attachments:/app/uploads
       # Persist submissions data
       - ./data:/app/data
     restart: unless-stopped

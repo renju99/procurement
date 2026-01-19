@@ -8,6 +8,37 @@ const PDFDocument = require('pdfkit');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Basic Authentication credentials for uploads folder
+const UPLOADS_USERNAME = 'procurement@berkeleyuae.com';
+const UPLOADS_PASSWORD = 'Berk_2351086$';
+
+// Basic Authentication middleware
+function basicAuth(req, res, next) {
+    console.log('[AUTH] Checking authentication for:', req.path);
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Basic ')) {
+        console.log('[AUTH] No authorization header found, returning 401');
+        res.setHeader('WWW-Authenticate', 'Basic realm="Uploads Folder"');
+        return res.status(401).send('Authentication required');
+    }
+    
+    // Extract credentials from Authorization header
+    const base64Credentials = authHeader.split(' ')[1];
+    const credentials = Buffer.from(base64Credentials, 'base64').toString('utf-8');
+    const [username, password] = credentials.split(':');
+    
+    // Verify credentials
+    if (username === UPLOADS_USERNAME && password === UPLOADS_PASSWORD) {
+        console.log('[AUTH] Authentication successful');
+        return next();
+    } else {
+        console.log('[AUTH] Invalid credentials');
+        res.setHeader('WWW-Authenticate', 'Basic realm="Uploads Folder"');
+        return res.status(401).send('Invalid credentials');
+    }
+}
+
 // Enable CORS for all origins including file:// protocol
 app.use(cors({
     origin: function (origin, callback) {
@@ -26,9 +57,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Create vendors directory if it doesn't exist
-// Files will be stored in D:\Vendors (Windows) or /app/vendors (Docker)
+// Files will be stored in /app/uploads (Docker - mounted from /var/www/attachments) or D:\Vendors (Windows)
 // Check if running in Docker container, otherwise use D:\Vendors
-const uploadsDir = fs.existsSync('/app/vendors') ? '/app/vendors' : 'D:\\Vendors';
+const uploadsDir = fs.existsSync('/app/uploads') ? '/app/uploads' : (fs.existsSync('/app/vendors') ? '/app/vendors' : 'D:\\Vendors');
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
     console.log(`Created vendors directory: ${uploadsDir}`);
@@ -698,26 +729,117 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Serve static files (for serving the HTML form)
-app.use(express.static(path.join(__dirname)));
-
 // Serve the form as the default page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'vendor-registration-form.html'));
 });
 
-// Serve uploads browser interface
-app.get('/uploads', (req, res) => {
+// Serve uploads browser interface (protected with Basic Auth)
+app.get('/uploads', basicAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'uploads-browser.html'));
 });
 
-// Handle /uploads/ with trailing slash
-app.get('/uploads/', (req, res) => {
+// Handle /uploads/ with trailing slash (protected with Basic Auth)
+app.get('/uploads/', basicAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'uploads-browser.html'));
 });
 
-// API endpoint to list directories and files
-app.get('/api/uploads/list', (req, res) => {
+// Serve files directly from /uploads/{path} (protected with Basic Auth)
+// This allows direct access to files like /uploads/CompanyName_SUB-xxx/file.pdf
+// Use a middleware to catch all paths under /uploads/ that aren't exact matches
+app.use('/uploads', basicAuth, (req, res, next) => {
+    // Skip if it's exactly /uploads or /uploads/ (handled by routes above)
+    if (req.path === '' || req.path === '/') {
+        return next();
+    }
+    
+    try {
+        // Extract the path after /uploads/ (remove leading slash)
+        const requestedPath = req.path.startsWith('/') ? req.path.substring(1) : req.path;
+        if (!requestedPath) {
+            return res.sendFile(path.join(__dirname, 'uploads-browser.html'));
+        }
+
+        const fullPath = path.join(uploadsDir, requestedPath);
+
+        // Security: Ensure path is within uploads directory
+        const normalizedPath = path.normalize(fullPath);
+        const normalizedUploadsDir = path.normalize(uploadsDir);
+        
+        if (!normalizedPath.startsWith(normalizedUploadsDir)) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        if (!fs.existsSync(normalizedPath)) {
+            return res.status(404).json({ error: 'File or directory not found' });
+        }
+
+        const stats = fs.statSync(normalizedPath);
+        
+        // If it's a directory, serve the browser interface
+        if (stats.isDirectory()) {
+            return res.sendFile(path.join(__dirname, 'uploads-browser.html'));
+        }
+
+        // If it's a file, serve it
+        if (stats.isFile()) {
+            // Set appropriate headers
+            const filename = path.basename(normalizedPath);
+            const ext = path.extname(filename).toLowerCase();
+            
+            // Determine content type
+            const contentTypes = {
+                '.pdf': 'application/pdf',
+                '.jpg': 'image/jpeg',
+                '.jpeg': 'image/jpeg',
+                '.png': 'image/png',
+                '.gif': 'image/gif',
+                '.doc': 'application/msword',
+                '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                '.txt': 'text/plain',
+                '.zip': 'application/zip',
+                '.rar': 'application/x-rar-compressed'
+            };
+            
+            const contentType = contentTypes[ext] || 'application/octet-stream';
+            res.setHeader('Content-Type', contentType);
+            res.setHeader('Content-Length', stats.size);
+            
+            // For PDFs and images, display inline; for others, download
+            if (['.pdf', '.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+                res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
+            } else {
+                res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+            }
+
+            // Stream the file
+            const fileStream = fs.createReadStream(normalizedPath);
+            fileStream.pipe(res);
+
+            fileStream.on('error', (error) => {
+                console.error('Error streaming file:', error);
+                if (!res.headersSent) {
+                    res.status(500).json({ error: 'Error reading file' });
+                }
+            });
+            // Don't call next() - we're handling the response
+            return;
+        }
+        
+        // If we get here and haven't sent a response, call next()
+        if (!res.headersSent) {
+            next();
+        }
+    } catch (error) {
+        console.error('Error serving file:', error);
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Failed to serve file: ' + error.message });
+        }
+    }
+});
+
+// API endpoint to list directories and files (protected with Basic Auth)
+app.get('/api/uploads/list', basicAuth, (req, res) => {
     try {
         const requestedPath = req.query.path || '';
         const fullPath = requestedPath 
@@ -799,8 +921,8 @@ app.get('/api/uploads/list', (req, res) => {
     }
 });
 
-// API endpoint to download files
-app.get('/api/uploads/download', (req, res) => {
+// API endpoint to download files (protected with Basic Auth)
+app.get('/api/uploads/download', basicAuth, (req, res) => {
     try {
         const requestedPath = req.query.path;
         if (!requestedPath) {
@@ -849,6 +971,9 @@ app.get('/api/uploads/download', (req, res) => {
         }
     }
 });
+
+// Serve static files (for serving the HTML form) - placed at the end after all routes
+app.use(express.static(path.join(__dirname)));
 
 // Start server
 app.listen(PORT, () => {

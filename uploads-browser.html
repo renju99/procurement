@@ -437,7 +437,27 @@
                     ? `/api/uploads/list?path=${encodeURIComponent(path)}`
                     : '/api/uploads/list';
                 
-                const response = await fetch(url);
+                // Include Basic Auth credentials in request
+                const credentials = btoa('procurement@berkeleyuae.com:Berk_2351086$');
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Basic ${credentials}`
+                    }
+                });
+                
+                if (response.status === 401) {
+                    contentArea.innerHTML = `<div class="empty-state">
+                        <div class="empty-state-icon">🔒</div>
+                        <h3>Authentication Required</h3>
+                        <p>Please refresh the page and enter your credentials.</p>
+                    </div>`;
+                    return;
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
 
                 if (data.error) {
